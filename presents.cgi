@@ -1,0 +1,224 @@
+#!/usr/bin/perl
+
+#Chooses a random number. This will determine which of several pre-set paths the title will take.
+$range = 8;
+$number = int(rand($range));
+
+#Arrays of random words in several categories.
+@determiner = ("His ", "One ", "A ");
+@nationality = ("Greek ", "Greek ", "Greek ", "Greek ", "Greek ", "Italian ", "Italian ", "Italian ", "Spanish ", "French ", "South American ", "Brazilian ", "Venezuelan ", "Australian ", "Latin ", "Mediterranean ", "English ", "British ", "Desert ", "Wealthy ", "Noble ", "Billionaire ", "Millionaire ", "Sicilian ", "Venetian ", "Roman ", "Cretian ", "Surgeon ", "Doctor ", "", "", "", "", "", "", "", "", "", "", "", "", "");
+@malenoun = ("King", "Prince", "Lord", "Duke", "Count", "Earl", "Aristocrat", "Noble", "Tycoon", "Magnate", "Billionaire", "Millionaire", "Sheikh", "Boss", "CEO", "CFO", "Banker", "Surgeon", "Doctor", "Frenchman", "Englishman", "Spaniard", "Italian", "Sicilian", "Venetian");
+@girljob = ("Secretary", "Housekeeper", "Waitress", "Virgin");
+@femalenoun = ("Bride", "Mistress", "Wife", "Virgin", "Woman", "Valentine", @girljob);
+@childnoun = ("Love-Child", "Baby", "Heir");
+@childadj = ("Secret", "Hidden", "Accidental", "Shameful", "Royal", "Doorstep", "Doorstop", "Five-Alarm", "Christmas", "Valentine");
+@byverb = ("Pregnant", "Propositioned", "Demanded", "Commanded", "Bound", "Blackmailed", "Taken", "Captivated", "Forced", "Shackled", "Crowned", @forverb);
+@forverb = ("Bought", "Purchased", "Chosen", "Hired", "Bedded", "Wedded", "Seduced", "Claimed", "Selected", "Contracted");
+@femaleadj = ("Unwilling", "Defiant", "Disobedient", "Innocent", "Captive", "Forbidden", "Future", "Prospective", "Convenient", "Private", "Pregnant", "Ordinary", "Rags-to-Riches", "Live-In", "Contract", "Unsuitable", "English", "Undercover", "Token", "Mail-Order", @girljob, @childadj, @byverb);
+@adjective = ("Blackmail ", "Pregnancy ", "Bedroom ", "Marriage ", "One-Night ", "Ruthless ", "Passionate ", "Vengeance ", "Seductive ", "Seduction ", "Valentine's ", "Christmas ", "Scandalous ", "Ultimate ", "Penultimate ");
+@unnecessary = (" for the Bedroom", " in the Bedroom", " in Bed", " in His Bed", " in His Royal Bed", " for Seduction", " for Seducing", " for Tax Purposes", " of Shame", " of Revenge", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+@concrete = ("Diamonds", "Wedding", "Wedding Night", "Wedding Ring", "Bed", "Marriage Bed", "Bedroom", "Bidding");
+@abstract = ("Pleasure", "Convenience", "Revenge", "Blackmail", "Marriage", "Desire");
+@forhis = (@concrete, @abstract);
+@suggestion = ("Proposal", "Proposition", "Affair", "Demand", "Revenge", "Suggestion", "Bargain", "Command", "Ultimatum", "Vendetta", "Dilemma", "Seduction", "Pursuit", "Plan", "Deal", "Arrangement", "Mission", "Decision", "Undertaking", "Gambit");
+@hisblackmail = (@suggestion, @concrete);
+
+#HTML page begins. 
+
+print "Content-type:text/html\n\n";
+
+print "<html><head><title>Romance Novel Title Generator</title>\n<link rel=stylesheet type=text/css href=/style.css></head><body>\n";
+
+print "<div id=lynx><a class=lynx href=/>main</a> | <a class=lynx href=/code.shtml>code samples</a></div>";
+
+print "<h1>Romance Novel Titles</h1><div id=bodytext>\n";
+
+print "<p>There is a certain type of supermarket checkout romance novel which follows a very strict formula in its naming and plot conventions: a dominating but ultimately stand-up alpha male, generally of Mediterranean descent, often of noble lineage, and always with at least infinite funds, stakes his claim on a spirited but ultimately vulnerable woman. They live happily ever after. <p>I would estimate 90% of the titles generated here are actual books.</font></blockquote> \n";
+print "<p><center><h2><i>";
+
+#One of several paths is chosen based on the random number selected above. Each path results in a specific type of title combining random words from the above arrays.
+
+#If the randomly chosen number is 0, prints a title of the form (verb that can follow "by"): (determiner) (female adjective) (female noun), for example BOUGHT: HIS UNWILLING MISTRESS. Also includes the possibility for an optional ending from the "unnecessary" category , e.g. FOR TAX PURPOSES.
+
+if ($number == 0) {
+
+ $current = rand $#forverb + 1;
+  print "$forverb[$current]"; 
+
+print ": ";
+
+ $current = rand $#determiner + 1;
+  print "$determiner[$current]"; 
+
+ $current = rand $#femaleadj + 1;
+  print "$femaleadj[$current]"; 
+
+ print " ";
+
+ $current = rand $#femalenoun + 1;
+  print "$femalenoun[$current]";  
+
+ $current = rand $#unnecessary + 1;
+  print "$unnecessary[$current]"; 
+
+#If the randomly chosen number is 1, prints a title of the form (verb that could follow "by") BY THE (nationality) (male noun), for example PREGNANT BY THE GREEK PRINCE. Also includes the possibility for an optional ending from the "unnecessary" category , e.g. FOR TAX PURPOSES.
+
+} elsif ($number == 1) {
+
+ $current = rand $#byverb + 1;
+  print "$byverb[$current]"; 
+
+ print " by the ";
+
+ $current = rand $#nationality + 1;
+  print "$nationality[$current]"; 
+
+ $current = rand $#malenoun + 1;
+  print "$malenoun[$current]"; 
+
+ $current = rand $#unnecessary + 1;
+  print "$unnecessary[$current]"; 
+
+#If the randomly chosen number is 2, prints a title of the form (verb that could follow "for") FOR THE (nationality) (male noun)'S (ownable object), for example BOUGHT FOR THE GREEK PRINCE'S BED. (Note that verbs that could follow "for" are a subset of verbs that could follow "by", so while previous path could have produced BOUGHT BY THE GREEK PRINCE, this path cannot produce PREGNANT FOR THE GREEK PRINCE'S BED.) Also includes the possibility for an optional ending from the "unnecessary" category , e.g. FOR TAX PURPOSES.
+
+} elsif ($number == 2) {
+
+ $current = rand $#forverb + 1;
+  print "$forverb[$current]"; 
+
+ print " for the ";
+
+ $current = rand $#nationality + 1;
+  print "$nationality[$current]"; 
+
+ $current = rand $#malenoun + 1;
+  print "$malenoun[$current]";
+
+ print "\'s ";
+
+ $current = rand $#forhis + 1;
+  print "$forhis[$current]"; 
+
+ $current = rand $#unnecessary + 1;
+  print "$unnecessary[$current]"; 
+
+#If the randomly chosen number is 3, prints a title of the form THE (nationality) (male noun)'S (ADJECTIVAL) (CONCRETE OR ABSTRACT NOUN), for example THE GREEK PRINCE'S BLACKMAIL REVENGE or THE GREEK PRINCE'S BLACKMAIL DIAMONDS. (The hisblackmail array is simply composed of both the concrete and abstract noun arrays.) Also includes the possibility for an optional ending from the "unnecessary" category , e.g. FOR TAX PURPOSES.
+
+} elsif ($number == 3) {
+
+ print "The ";
+
+ $current = rand $#nationality + 1;
+  print "$nationality[$current]"; 
+
+ $current = rand $#malenoun + 1;
+  print "$malenoun[$current]"; 
+
+ print "\'s ";
+
+ $current = rand $#adjective + 1;
+  print "$adjective[$current]"; 
+
+ $current = rand $#hisblackmail + 1;
+  print "$hisblackmail[$current]"; 
+
+ $current = rand $#unnecessary + 1;
+  print "$unnecessary[$current]"; 
+
+#If the randomly chosen number is 4, prints a title of the form (Female Adjective) (Female Noun), (Female Adjective) (Female Noun), for example BOUGHT MISTRESS, UNWILLING BRIDE. Note that there is no failsafe to prevent the same words from appearing twice, because it's funnier that way. Also includes the possibility for an optional ending from the "unnecessary" category , e.g. FOR TAX PURPOSES.
+
+} elsif ($number == 4) {
+
+ $current = rand $#femaleadj + 1;
+  print "$femaleadj[$current]"; 
+
+ print " ";
+
+ $current = rand $#femalenoun + 1;
+  print "$femalenoun[$current]"; 
+
+ print ", ";
+
+ $current = rand $#femaleadj + 1;
+  print "$femaleadj[$current]"; 
+
+ print " ";
+
+ $current = rand $#femalenoun + 1;
+  print "$femalenoun[$current]"; 
+
+ $current = rand $#unnecessary + 1;
+  print "$unnecessary[$current]"; 
+
+#If the randomly chosen number is 5, prints a title of the form (Abstract Noun)... OR (Abstract Noun)?, for example BLACKMAIL... OR REVENGE? This type of title does not have the option for an unnecessary optional ending.
+
+} elsif ($number == 5) {
+
+ print "For ";
+
+ $current = rand $#abstract + 1;
+  print "$abstract[$current]"; 
+
+ print "... Or ";
+
+ $current = rand $#abstract + 1;
+  print "$abstract[$current]"; 
+
+ print "?";
+
+#If the randomly chosen number is 6, prints a title of the form THE (Nationality) (Male Noun)'S (Child Adjective) (Child Noun), for example THE GREEK PRINCE'S HIDDEN LOVE-CHILD. Also includes the possibility for an optional ending from the "unnecessary" category , e.g. FOR TAX PURPOSES.
+
+} elsif ($number == 6) {
+
+ print "The ";
+
+ $current = rand $#nationality + 1;
+  print "$nationality[$current]"; 
+
+ $current = rand $#malenoun + 1;
+  print "$malenoun[$current]"; 
+
+ print "\'s ";
+
+ $current = rand $#childadj + 1;
+  print "$childadj[$current]"; 
+
+ print " ";
+
+ $current = rand $#childnoun + 1;
+  print "$childnoun[$current]"; 
+
+ $current = rand $#unnecessary + 1;
+  print "$unnecessary[$current]"; 
+
+#If the randomly chosen number is any other number (ie. 7), prints a title of the classic form THE (Nationality) (Male Noun)'S (Female Adjective) (Female Noun), for example THE GREEK PRINCE'S UNWILLING MISTRESS.
+
+} else {
+
+ print "The ";
+
+ $current = rand $#nationality + 1;
+  print "$nationality[$current]"; 
+
+ $current = rand $#malenoun + 1;
+  print "$malenoun[$current]"; 
+
+ print "\'s ";
+
+ $current = rand $#femaleadj + 1;
+  print "$femaleadj[$current]"; 
+
+ print " ";
+
+ $current = rand $#femalenoun + 1;
+  print "$femalenoun[$current]"; 
+
+}
+
+#Page reload, links, and end. 
+
+print "</h2></center></i><br><br><button onClick=\"window.location.reload()\">Generate new title!</button> \n";
+print "</div></body></html>";
+
+
+
